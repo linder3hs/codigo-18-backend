@@ -1,9 +1,22 @@
 from flask import Flask, jsonify, request
+import bcrypt
 
 
 app = Flask(__name__) # __name__ == '__main__'
 
 users = []
+
+
+def encrypt_password(password):
+    """
+     Generar un salt
+     salt: es un numero aleatorio que se genera y es concatenado al password,
+     este se usa por seguridad y para evitar ataques de fuerza bruta
+    """
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(password.encode('utf-8'), salt)
+
+
 
 @app.route('/')
 def home():
@@ -15,12 +28,19 @@ desde POSTMAN
 """
 @app.route('/api/v1/user', methods=['POST'])
 def create_user():
-    user_data = request.get_json()
-    users.append(user_data)
+    try:
+      user_data = request.get_json()
+      user_data['password'] = encrypt_password(user_data.get('password')).decode('utf-8')
+      users.append(user_data)
 
-    return jsonify({
-        "new_user": user_data
-    })
+      return jsonify({
+          "new_user": user_data
+      })
+    except Exception as e:
+        return jsonify({
+            "error": e,
+            "linea": e.__traceback__.tb_lineno
+        })
 
 
 
