@@ -1,8 +1,15 @@
 from flask import Flask, jsonify, request
 from utils import encrypt_password
+from config import Config
+from extensions import db, migrate
+from entities.user_model import User
 
 
 app = Flask(__name__)  # __name__ == '__main__'
+app.config.from_object(Config)
+
+db.init_app(app)
+migrate.init_app(app, db)
 
 
 @app.route('/')
@@ -29,4 +36,5 @@ def create_user():
 
 
 if __name__ == '__main__':
+    db.create_all()
     app.run(port=7000, debug=True)
