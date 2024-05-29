@@ -23,10 +23,19 @@ def create_user():
         user_data = request.get_json()
         user_data['password'] = encrypt_password(
             user_data.get('password')).decode('utf-8')
-        # users.append(user_data)
+
+        new_user = User(
+            full_name=f"{user_data['name']} {user_data['lastname']}",
+            email=user_data['email'],
+            password=user_data['password'],
+            phoneNumber=user_data['phone_number'],
+            genre=user_data['genre']
+        )
+        db.session.add(new_user)
+        db.session.commit()
 
         return jsonify({
-            "new_user": user_data
+            "new_user": new_user.to_dic()
         })
     except Exception as e:
         return jsonify({
@@ -36,5 +45,6 @@ def create_user():
 
 
 if __name__ == '__main__':
-    db.create_all()
+    with app.app_context():
+        db.create_all()
     app.run(port=7000, debug=True)
