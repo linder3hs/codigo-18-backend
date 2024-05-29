@@ -42,11 +42,16 @@ def get_all_users():
 @app.route('/api/v1/user/<int:user_id>')
 def get_user_by_id(user_id):
     try:
-        # buscamos al usuario porid
-        user = User.query.get(user_id).to_dic()
+        # buscamos al usuario por id
+        user = User.query.get(user_id)
+
+        if user is None:
+            return jsonify({
+                "message": "user not found"
+            })
 
         return jsonify({
-            "user": user
+            "user": user.to_dic()
         })
     except Exception as e:
         return jsonify({
@@ -77,6 +82,32 @@ def create_user():
         return jsonify({
             "new_user": new_user.to_dic()
         }), 201
+    except Exception as e:
+        return jsonify({
+            "error": e,
+            "linea": e.__traceback__.tb_lineno
+        }), 500
+
+
+# DELETE
+@app.route('/api/v1/user/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    try:
+        # buscar por id
+        user = User.query.get(user_id)
+
+        if user is None:
+            return jsonify({
+                "message": "user not found"
+            })
+
+        # eliminar al usuario
+        db.session.delete(user)
+        db.session.commit()
+
+        return jsonify({
+            "message": "user deleted"
+        })
     except Exception as e:
         return jsonify({
             "error": e,
