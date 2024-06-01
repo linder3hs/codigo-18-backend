@@ -58,3 +58,10 @@ button:focus-visible {
   display: flex;
   justify-content: space-between;
 }
+
+.card {
+  border: solid;
+  width: 100%;
+  border-radius: 12px;
+  text-align: left;
+}
