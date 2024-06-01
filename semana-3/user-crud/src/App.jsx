@@ -39,6 +39,20 @@ function App() {
     setUsers(data.users);
   };
 
+  const deleteUser = async (user_id) => {
+    const response = await fetch(
+      `http://127.0.0.1:7000/api/v1/user/${user_id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+  };
+
   return (
     <>
       <main className="main-container">
@@ -60,6 +74,14 @@ function App() {
                 <div key={user.id} className="card">
                   <h4>{user.full_name}</h4>
                   <p>{user.email}</p>
+                  <button
+                    onClick={() => deleteUser(user.id)}
+                    style={{
+                      background: "red",
+                    }}
+                  >
+                    Eliminar
+                  </button>
                 </div>
               ))}
             </div>
