@@ -3,10 +3,13 @@ from utils import encrypt_password
 from config import Config
 from extensions import db, migrate
 from entities.user_model import User
+from flask_cors import CORS
 
 
 app = Flask(__name__)  # __name__ == '__main__'
 app.config.from_object(Config)
+
+CORS(app)
 
 db.init_app(app)
 migrate.init_app(app, db)
