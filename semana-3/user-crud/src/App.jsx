@@ -20,6 +20,19 @@ function App() {
     });
   };
 
+  const handleForm = async (event) => {
+    event.preventDefault();
+    const response = await fetch("http://127.0.0.1:7000/api/v1/user", {
+      method: "POST",
+      body: JSON.stringify(inputValues),
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+  };
+
   const getUsers = async () => {
     const response = await fetch("http://127.0.0.1:7000/api/v1/user");
     const data = await response.json();
@@ -55,7 +68,7 @@ function App() {
         <section>
           <h2>Crear Ususarios</h2>
           <div>
-            <form action="">
+            <form action="" onSubmit={handleForm}>
               <div>
                 <input
                   type="text"
