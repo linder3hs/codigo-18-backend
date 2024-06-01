@@ -89,7 +89,50 @@ def create_user():
         }), 500
 
 
+# UPDATE (PUT)
+@app.route('/api/v1/user/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    try:
+        user_data = request.get_json()
+        # buscar al usuario de nuestra base de datos y ver si existe
+        user = User.query.get(user_id)
+
+        if user is None:
+            return jsonify({
+                "message": "user not found"
+            })
+
+        # si, si existe entonces hacemos la actualizacion de los datos
+        if 'full_name' in user_data:
+            user.full_name = user_data['full_name']
+
+        if 'email' in user_data:
+            user.email = user_data['email']
+
+        if 'password' in user_data:
+            user.password = encrypt_password(
+                user_data['password']).decode('utf-8')
+
+        if 'phone_number' in user_data:
+            user.phoneNumber = user_data['phone_number']
+
+        if 'genre' in user_data:
+            user.genre = user_data['genre']
+
+        db.session.commit()
+        return jsonify({
+            "message": "user updated"
+        })
+
+    except Exception as e:
+        return jsonify({
+            "error": e,
+            "linea": e.__traceback__.tb_lineno
+        }), 500
+
 # DELETE
+
+
 @app.route('/api/v1/user/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     try:
