@@ -1,9 +1,43 @@
 from flask import Blueprint, jsonify, request
 from extensions import db
 from entities.user_model import User
-from utils import encrypt_password
+from utils import encrypt_password, check_password
+from flask_jwt_extended import create_access_token
 
 users_bp = Blueprint('users', __name__)
+
+"""
+Ruta para autentica a los usuarios:
+
+email
+password
+"""
+
+
+@users_bp.route('/api/v1/login', methods=['POST'])
+def login():
+    user_data = request.get_json()
+    # paso1: Buscar al usuario por correo (email)
+    user = User.query.filter_by(email=user_data["email"]).first()
+    # paso2: Validar que el usuario exista
+    if user is None:
+        return jsonify({
+            "message": "Email y/o password incorrectos"
+        })
+
+    print('password', user.password)
+    # paso3: Usar una funcion que nos permita comparar el texto normal con el texto encriptado
+    if check_password(user_data["password"].encode('utf-8'), user.password.encode('utf-8')):
+        # paso 4 Si el usuario es correcto entonces creamos un token
+        access_token = create_access_token(identity=user.id)
+        return {
+            "user": user.to_dic(),
+            "access_token": access_token
+        }
+    else:
+        return jsonify({
+            "message": "Email y/o password incorrectos"
+        })
 
 
 @users_bp.route('/api/v1/user')

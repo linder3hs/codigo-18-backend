@@ -22,12 +22,6 @@ def get_all_products():
         }), 500
 
 
-"""
-Retos 2 crear la ruta y la funcion la cual me permita crear
-un producto POST
-"""
-
-
 @products_bp.route('/api/v1/product', methods=['POST'])
 def create_product():
     try:

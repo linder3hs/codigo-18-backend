@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 from config import Config
-from extensions import db, migrate
+from extensions import db, migrate, jwt
 from flask_cors import CORS
 from blueprints.users.routes import users_bp
 from blueprints.products.routes import products_bp
@@ -13,6 +13,7 @@ CORS(app)
 
 db.init_app(app)
 migrate.init_app(app, db)
+jwt.init_app(app)
 
 app.register_blueprint(users_bp)
 app.register_blueprint(products_bp)
