@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from extensions import db
 from entities.user_model import User
 from utils import encrypt_password, check_password
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required
 
 users_bp = Blueprint('users', __name__)
 
@@ -41,6 +41,7 @@ def login():
 
 
 @users_bp.route('/api/v1/user')
+@jwt_required()
 def get_all_users():
     try:
         users = User.query.all()
