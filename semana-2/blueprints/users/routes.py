@@ -62,6 +62,7 @@ def get_all_users():
 
 # GET by user id
 @users_bp.route('/api/v1/user/<int:user_id>')
+@jwt_required()
 def get_user_by_id(user_id):
     try:
         # buscamos al usuario por id
@@ -113,6 +114,7 @@ def create_user():
 
 # UPDATE (PUT)
 @users_bp.route('/api/v1/user/<int:user_id>', methods=['PUT'])
+@jwt_required()
 def update_user(user_id):
     try:
         user_data = request.get_json()
@@ -156,6 +158,7 @@ def update_user(user_id):
 
 
 @users_bp.route('/api/v1/user/<int:user_id>', methods=['DELETE'])
+@jwt_required()
 def delete_user(user_id):
     try:
         # buscar por id
