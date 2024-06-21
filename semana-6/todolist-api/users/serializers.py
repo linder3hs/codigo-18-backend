@@ -1,10 +1,10 @@
-from rest_framework.serializers import ModelSerializer, BaseSerializer, EmailField, CharField
+from rest_framework.serializers import ModelSerializer, Serializer, EmailField, CharField
 from .models import User
 from django.contrib.auth.hashers import make_password
 
 
 # La mision de el, es verificar que los campos que estamos recibiendo solo sean el email y el password
-class UserLoginSerializer(BaseSerializer):
+class UserLoginSerializer(Serializer):
     email = EmailField(required=True)
     password = CharField(required=True)
 
