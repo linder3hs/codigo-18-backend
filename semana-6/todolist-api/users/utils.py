@@ -1,4 +1,4 @@
-from rest_framework_simplejwt.tokens import RefreshToken, UntypedToken
+from rest_framework_simplejwt.tokens import RefreshToken, UntypedToken, AccessToken
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 
 # esta funcion es para crear token
@@ -27,3 +27,11 @@ def validate_token(token):
     except (InvalidToken, TokenError) as e:
         print(e)
         return False
+
+
+def get_payload_from_token(token):
+    try:
+        return AccessToken(token).payload
+    except (InvalidToken, TokenError) as e:
+        print(e)
+        return None
