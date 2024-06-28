@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'authentication',
+    'payments',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +122,6 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+
+# MERCADOPAGO
+MERCADOPAGO_ACCESS_TOKEN = '...'
