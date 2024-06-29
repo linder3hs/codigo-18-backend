@@ -28,17 +28,20 @@ INSTALLED_APPS = [
     'rest_framework',
     'authentication',
     'payments',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'authentication_api.urls'
 
@@ -74,6 +77,10 @@ DATABASES = {
         'POST': '5432'
     }
 }
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173'
+]
 
 
 # Password validation
@@ -124,4 +131,4 @@ REST_FRAMEWORK = {
 }
 
 # MERCADOPAGO
-MERCADOPAGO_ACCESS_TOKEN = '...'
+MERCADOPAGO_ACCESS_TOKEN = 'TEST-3417683560685682-062721-b837df0b72a37c4126f6d6cca0c83684-1605982166'

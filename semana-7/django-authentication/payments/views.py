@@ -35,3 +35,27 @@ class PaymentsWithMercadoPagoView(APIView):
         return Response({
             "preference_id": preference_id
         }, status.HTTP_201_CREATED)
+
+
+class CustomCreatePaymentView(APIView):
+    def post(self, request):
+        mercadopage_skd = mercadopago.SDK(settings.MERCADOPAGO_ACCESS_TOKEN)
+        payment_data = {
+            "transaction_amount": float(request.data.get("transaction_amount")),
+            "token": request.data.get("token"),
+            "description": request.data.get("description"),
+            "installments": int(request.data.get("installments")),
+            "payment_method_id": request.data.get("payment_method_id"),
+            "payer": {
+                "email": request.data.get("email"),
+                "identification": {
+                    "type": request.data.get("type"),
+                    "number": request.data.get("number")
+                }
+            }
+        }
+        payment_response = mercadopage_skd.payment().create(payment_data)
+
+        return Response({
+            "payment_response": payment_response["response"]
+        }, status.HTTP_201_CREATED)
