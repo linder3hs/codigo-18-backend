@@ -3,6 +3,8 @@ from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from .models import Payment
+from django.contrib.auth.models import User
 
 
 class PaymentsWithMercadoPagoView(APIView):
@@ -55,6 +57,12 @@ class CustomCreatePaymentView(APIView):
             }
         }
         payment_response = mercadopage_skd.payment().create(payment_data)
+        print("payment_response_id", payment_response["response"].get("id"))
+
+        Payment.objects.create(
+            user=User.objects.get(pk=1),
+            payment_id=payment_response["response"].get("id")
+        )
 
         return Response({
             "payment_response": payment_response["response"]
