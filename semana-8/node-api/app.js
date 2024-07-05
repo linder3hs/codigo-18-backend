@@ -1,9 +1,10 @@
 // importar express
 const express = require("express");
+const { PrismaClient } = require("@prisma/client");
 
 // instanciar express en una variable
 const app = express();
-
+const prisma = new PrismaClient();
 // vamos a indicar que nuestro proyecto puede recibir json desde el cliente
 app.use(express.json());
 
@@ -32,6 +33,14 @@ app.get("/products", function (request, response) {
       title: "iPhone 14",
     },
   ]);
+});
+
+app.get("/books", async function (req, res) {
+  const books = await prisma.book.findMany();
+
+  return res.json({
+    books,
+  });
 });
 
 app.listen(9000, function () {
