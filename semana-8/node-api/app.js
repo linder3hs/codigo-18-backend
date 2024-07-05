@@ -43,6 +43,28 @@ app.get("/books", async function (req, res) {
   });
 });
 
+app.post("/books", async function (req, res) {
+  const book = req.body;
+
+  const newBook = await prisma.book.create({
+    data: {
+      title: book.title,
+      author: book.author,
+      summary: book.summary,
+      isbn: book.isbn,
+      is_published: book.is_published,
+      published_date: new Date(book.published_date),
+    },
+  });
+
+  return res.json(
+    {
+      book: newBook,
+    },
+    201
+  );
+});
+
 app.listen(9000, function () {
   console.log("El servidor inicio en http://localhost:9000");
 });
