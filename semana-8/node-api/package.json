@@ -13,6 +13,8 @@
   "author": "Linder Hassinger",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.19.2"
+    "@prisma/client": "^5.16.1",
+    "express": "^4.19.2",
+    "prisma": "^5.16.1"
   }
 }
