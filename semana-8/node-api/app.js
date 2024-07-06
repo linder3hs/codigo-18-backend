@@ -43,6 +43,17 @@ app.get("/books", async function (req, res) {
   });
 });
 
+app.get("/books/:id", async function (req, res) {
+  const bookId = Number(req.params.id);
+  const book = await prisma.book.findUnique({
+    where: {
+      id: bookId,
+    },
+  });
+
+  return res.json({ book });
+});
+
 app.post("/books", async function (req, res) {
   const book = req.body;
 
@@ -63,6 +74,32 @@ app.post("/books", async function (req, res) {
     },
     201
   );
+});
+
+app.put("/books/:id", async function (req, res) {
+  const bookUpdated = await prisma.book.update({
+    where: {
+      id: Number(req.params.id),
+    },
+    // es la informacion que vamos a actualizar req.body
+    data: req.body,
+  });
+
+  return res.json({
+    book: bookUpdated,
+  });
+});
+
+app.delete("/books/:id", async function (req, res) {
+  const bookDeleted = await prisma.book.delete({
+    where: {
+      id: Number(req.params.id),
+    },
+  });
+
+  return res.json({
+    book: bookDeleted,
+  });
 });
 
 app.listen(9000, function () {
