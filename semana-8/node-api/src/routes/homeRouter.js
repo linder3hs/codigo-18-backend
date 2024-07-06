@@ -1,8 +1,14 @@
 const express = require("express");
-const { index } = require("../controller/homeController");
+const {
+  index,
+  getProducts,
+  createProduct,
+} = require("../controller/homeController");
 
 const router = express.Router();
 
 router.get("/", index);
+router.get("/products", getProducts);
+router.post("/products", createProduct);
 
-export default router;
+module.exports = router;
