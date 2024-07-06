@@ -21,4 +21,5 @@ function getProducts(req, res) {
   ]);
 }
 
+// export
 module.exports = { index, createProduct, getProducts };
