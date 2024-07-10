@@ -1,0 +1,20 @@
+{
+  "name": "node-api",
+  "version": "1.0.0",
+  "description": "Mi primera API con NodeJS",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "API",
+    "Node"
+  ],
+  "author": "Linder Hassinger",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^5.16.1",
+    "express": "^4.19.2",
+    "prisma": "^5.16.1"
+  }
+}
