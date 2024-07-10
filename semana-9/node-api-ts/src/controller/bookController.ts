@@ -1,6 +1,7 @@
-const prisma = require("../utils/db");
+import type { Request, Response } from "express";
+import prisma from "../utils/db";
 
-async function getBooks(req, res) {
+async function getBooks(_req: Request, res: Response) {
   const books = await prisma.book.findMany();
 
   return res.json({
@@ -8,7 +9,7 @@ async function getBooks(req, res) {
   });
 }
 
-async function getBookById(req, res) {
+async function getBookById(req: Request, res: Response) {
   // string -> number
   const bookId = Number(req.params.id);
 
@@ -23,7 +24,7 @@ async function getBookById(req, res) {
   });
 }
 
-async function createBook(req, res) {
+async function createBook(req: Request, res: Response) {
   const book = req.body;
 
   const newBook = await prisma.book.create({
@@ -42,7 +43,7 @@ async function createBook(req, res) {
   });
 }
 
-async function updateBook(req, res) {
+async function updateBook(req: Request, res: Response) {
   const bookUpdated = await prisma.book.update({
     where: {
       id: Number(req.params.id),
@@ -56,7 +57,7 @@ async function updateBook(req, res) {
   });
 }
 
-async function deleteBook(req, res) {
+async function deleteBook(req: Request, res: Response) {
   const bookDeleted = await prisma.book.delete({
     where: {
       id: Number(req.params.id),
@@ -68,4 +69,4 @@ async function deleteBook(req, res) {
   });
 }
 
-module.exports = { getBooks, getBookById, createBook, updateBook, deleteBook };
+export { getBooks, getBookById, createBook, updateBook, deleteBook };

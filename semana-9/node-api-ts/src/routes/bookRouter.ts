@@ -1,13 +1,13 @@
-const express = require("express");
-const {
+import { Router } from "express";
+import {
   getBooks,
   getBookById,
   createBook,
   updateBook,
   deleteBook,
-} = require("../controller/bookController");
+} from "../controller/bookController";
 
-const router = express.Router();
+const router = Router();
 // recuerden que esto nos va a permitir usar GET, POST, PUT, PATCH y DELETE
 
 router.get("/", getBooks);
@@ -16,4 +16,4 @@ router.post("/", createBook);
 router.put("/:id", updateBook);
 router.delete("/:id", deleteBook);
 
-module.exports = router;
+export default router;
