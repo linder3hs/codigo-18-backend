@@ -3,10 +3,8 @@
   "version": "1.0.0",
   "description": "Mi primera API con NodeJS",
   "main": "app.js",
-  "type": "module",
-  "sourceType": "module",
   "scripts": {
-    "dev": "ts-node src/app.ts",
+    "dev": "npx nodemon",
     "build": "tsc --build"
   },
   "keywords": [
@@ -17,11 +15,14 @@
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "^5.16.1",
-    "@types/express": "^4.17.21",
-    "@types/node": "^20.14.10",
     "express": "^4.19.2",
     "prisma": "^5.16.1",
-    "ts-node": "^10.9.2",
     "typescript": "^5.5.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.10",
+    "ts-node": "^10.9.2"
   }
 }
