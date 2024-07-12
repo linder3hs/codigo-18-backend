@@ -7,11 +7,15 @@ const upload = multer({
   storage: multerS3({
     s3,
     bucket: process.env.AWS_S3_BUCKET_NAME as string,
-    acl: "public-read",
-    metadata: (req: Request, file, cb) => {
+    metadata: (_req: Request, file, cb) => {
       cb(null, {
         fieldName: file.fieldname,
       });
     },
+    key: (_req: Request, file, cb) => {
+      cb(null, `${Date.now()}-${file.originalname}`);
+    },
   }),
 });
+
+export default upload;

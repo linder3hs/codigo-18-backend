@@ -69,4 +69,23 @@ async function deleteBook(req: Request, res: Response) {
   });
 }
 
-export { getBooks, getBookById, createBook, updateBook, deleteBook };
+function uploadFile(req: Request, res: Response) {
+  if (!req.file) {
+    return res.status(400).json({
+      message: "No existe un archivo a subir",
+    });
+  }
+
+  res.json({
+    message: "File uploaded",
+  });
+}
+
+export {
+  getBooks,
+  getBookById,
+  createBook,
+  updateBook,
+  deleteBook,
+  uploadFile,
+};
