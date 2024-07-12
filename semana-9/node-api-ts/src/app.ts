@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import homeRouter from "./routes/homeRouter";
 import bookRouter from "./routes/bookRouter";
