@@ -1,11 +1,11 @@
 // sera el modelo donde vamos a definir los campos de nuestras colecciones
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const ubicationSchema = new mongoose.Schema({
+const ubicationSchema = new Schema({
   latitude: String,
   longitude: String,
   company: String,
   country: String,
 });
 
-module.exports = mongoose.model("ubicaciones", ubicationSchema);
+export default model("ubicaciones", ubicationSchema);
