@@ -1,19 +1,20 @@
-const Ubicacion = require("../models/ubicaciones");
+import type { Request, Response } from "express";
+import Ubicacion from "../models/ubicaciones";
 
-async function list(_req, res) {
+async function list(_req: Request, res: Response) {
   try {
     const ubications = await Ubicacion.find();
     return res.json({
       data: ubications,
     });
-  } catch (error) {
+  } catch (error: unknown) {
     return res.status(500).json({
-      message: error.message,
+      message: error,
     });
   }
 }
 
-async function create(req, res) {
+async function create(req: Request, res: Response) {
   try {
     // recuerden que la informacion que envia el cliente esta
     // en el req.body
@@ -23,15 +24,15 @@ async function create(req, res) {
     return res.status(201).json({
       message: "ubication created",
     });
-  } catch (error) {
+  } catch (error: unknown) {
     return res.status(500).json({
-      message: error.message,
+      message: error,
     });
   }
 }
 
 // Crearemos un endpoint para eliminar un registro especifico
-async function deleteId(req, res) {
+async function deleteId(req: Request, res: Response) {
   try {
     // Debemos de enviar el id
     // api/v1/ubicaciones/669afccf0410834741e2f776
@@ -46,15 +47,15 @@ async function deleteId(req, res) {
     return res.status(201).json({
       message: "Se elimino exitosamente 👍🔥",
     });
-  } catch (error) {
+  } catch (error: unknown) {
     return res.status(500).json({
-      message: error.message,
+      message: error,
     });
   }
 }
 
 // Crearemos un endpoint para actualizar la data de mi registro
-async function updateId(req, res) {
+async function updateId(req: Request, res: Response) {
   try {
     const { id } = req.params;
     const dataRecibida = req.body;
@@ -64,11 +65,11 @@ async function updateId(req, res) {
     return res.status(201).send({
       message: "Actualizacion exitosa 🐱‍👤🐱‍💻",
     });
-  } catch (error) {
+  } catch (error: unknown) {
     return res.status(500).json({
-      message: error.message,
+      message: error,
     });
   }
 }
 
-module.exports = { list, create, deleteId, updateId };
+export { list, create, deleteId, updateId };
